@@ -1,13 +1,26 @@
-import { fetchBreeds } from './cat-api';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SlimSelect from 'slim-select';
+import { fetchBreeds, fetchCatByBreed } from './cat-api';
 
+const select = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
-const error = document.querySelector('.error');
 const catInfo = document.querySelector('.cat-info');
 
-const loaderCheck = isLoading => {
-  loader.style.display = isLoading ? 'block' : 'none';
-};
+new SlimSelect({
+  select: '.breed-select',
+});
 
-const errorCheck = isError => {
-  error.style.display = isError ? 'block' : 'none';
-};
+fetchBreeds()
+  .then(breeds => {
+    loader.style.display = 'none';
+
+    const cat = breeds
+      .map(breed => `<option value="${breed.id}">${breed.name}</option>`)
+      .join('');
+
+    select.insertAdjacentElement('beforeend', cat);
+  })
+  .catch(error => {
+    loader.style.display = 'none';
+    Notify.failure('Oops! Something went wrong! Try reloading the page!');
+  });
