@@ -34,7 +34,7 @@ select.addEventListener('change', function () {
   fetchCatByBreed(selectedBreed)
     .then(breeds => {
       loader.style.display = 'none';
-      catData = breeds[0];
+      const catData = breeds[0];
 
       catInfo.innerHTML = `
     <div><img src="${catData.url}" width="400" alt="${catData.breeds[0].name}"></div>
