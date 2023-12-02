@@ -1,14 +1,9 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import SlimSelect from 'slim-select';
 import { fetchBreeds, fetchCatByBreed } from './cat-api';
 
 const select = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
 const catInfo = document.querySelector('.cat-info');
-
-new SlimSelect({
-  select: '.breed-select',
-});
 
 select.style.visibility = 'hidden';
 
