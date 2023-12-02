@@ -4,6 +4,7 @@ import { fetchBreeds, fetchCatByBreed } from './cat-api';
 const select = document.querySelector('.breed-select');
 const loader = document.querySelector('.loader');
 const catInfo = document.querySelector('.cat-info');
+const body = document.querySelector('body');
 
 select.style.visibility = 'hidden';
 
@@ -16,9 +17,10 @@ fetchBreeds()
       .map(breed => `<option value="${breed.id}">${breed.name}</option>`)
       .join('');
 
-    select.insertAdjacentElement('beforeend', cat);
+    select.insertAdjacentHTML('beforeend', cat);
   })
   .catch(error => {
+    console.log(error);
     loader.style.display = 'none';
     Notify.failure('Oops! Something went wrong! Try reloading the page!');
   });
@@ -35,18 +37,22 @@ select.addEventListener('change', function () {
       catData = breeds[0];
 
       catInfo.innerHTML = `
-    <div><img src="${catData.breeds[0].url}" width="400" alt="${catData.breeds[0].name}"></div>
+    <div><img src="${catData.url}" width="400" alt="${catData.breeds[0].name}"></div>
     <div>
     <h3>${catData.breeds[0].name}</h3>
-    <p>${catData.breeds[0].description}</p>
-    <p>${catData.breeds[0].temperament}</p>
+    <p>Description: ${catData.breeds[0].description}</p>
+    <p>Temperament: ${catData.breeds[0].temperament}</p>
     </div>
     `;
 
       catInfo.style.display = 'flex';
       catInfo.style.gap = '30px';
+      catInfo.style.marginTop = '50px';
     })
     .catch(error => {
+      console.log(error);
       Notify.failure('Oops! Something went wrong! Try reloading the page!');
     });
 });
+
+body.style.backgroundColor = '#FDFEF7';
