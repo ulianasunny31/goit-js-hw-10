@@ -5,7 +5,7 @@ axios.defaults.headers.common['x-api-key'] =
 
 function fetchBreeds() {
   return axios
-    .get('https://api.thecatapi.com/v1')
+    .get('https://api.thecatapi.com/v1/breeds')
     .then(response => response.data)
     .catch(error => {
       console.log(error);
@@ -15,7 +15,7 @@ function fetchBreeds() {
 
 function fetchCatByBreed() {
   return axios
-    .get('https://api.thecatapi.com/v1/breeds')
+    .get(`https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`)
     .then(response => response.data)
     .catch(error => {
       console.log(error);
