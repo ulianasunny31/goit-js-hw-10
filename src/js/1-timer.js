@@ -31,7 +31,7 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  dateFormat: 'd-h-m-s',
+
   onClose(selectedDates) {
     if (selectedDates[0].getTime() < dateNow) {
       iziToast.show(notifOpt);
