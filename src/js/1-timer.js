@@ -13,6 +13,15 @@ const hoursEl = document.querySelector('span[data-hours]');
 const minutesEl = document.querySelector('span[data-minutes]');
 const secondsEl = document.querySelector('span[data-seconds]');
 let userSelectedDate = '';
+const notifOpt = {
+  message: 'Please choose a date in the future',
+  messageColor: 'black',
+  messageSize: '14px',
+  position: 'topRight',
+  timeout: 4000,
+  color: 'yellow',
+  closeOnClick: true,
+};
 
 //Calendar
 startBtnEl.disabled = true;
@@ -25,7 +34,7 @@ const options = {
   dateFormat: 'd-h-m-s',
   onClose(selectedDates) {
     if (selectedDates[0].getTime() < dateNow) {
-      window.alert('Please choose a date in the future');
+      iziToast.show(notifOpt);
     } else {
       userSelectedDate = selectedDates[0];
       console.log(userSelectedDate);
