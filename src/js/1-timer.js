@@ -1,11 +1,16 @@
 //Imports
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 //Declarations
 const startBtnEl = document.querySelector('button[data-start]');
 const dateNow = Date.now();
-
+const daysEl = document.querySelector('span[data-days]');
+const hoursEl = document.querySelector('span[data-hours]');
+const minutesEl = document.querySelector('span[data-minutes]');
+const secondsEl = document.querySelector('span[data-seconds]');
 let userSelectedDate = '';
 
 //Calendar
@@ -29,6 +34,31 @@ const options = {
 
 const calendar = flatpickr('#datetime-picker', options);
 
+//Timer
+startBtnEl.addEventListener('click', handleTimerStart);
+
+function handleTimerStart(e) {
+  e.preventDefault();
+
+  startBtnEl.disabled = true;
+
+  const intervalID = setInterval(() => {
+    const dateNow = Date.now();
+    const difference = userSelectedDate - dateNow;
+    const timeLeft = convertMs(difference);
+
+    const days = addLeadingZero(timeLeft.days);
+    const hours = addLeadingZero(timeLeft.hours);
+    const minutes = addLeadingZero(timeLeft.minutes);
+    const seconds = addLeadingZero(timeLeft.seconds);
+
+    //Html changes
+    daysEl.innerHTML = days;
+    hoursEl.innerHTML = hours;
+    minutesEl.innerHTML = minutes;
+    secondsEl.innerHTML = seconds;
+  }, 1000);
+}
 //Getting time gap
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -47,4 +77,9 @@ function convertMs(ms) {
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
   return { days, hours, minutes, seconds };
+}
+
+//Styling the timer correctly
+function addLeadingZero(value) {
+  return value.toString().padStart(2, 0);
 }
