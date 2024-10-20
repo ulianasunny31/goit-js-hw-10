@@ -6,6 +6,7 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 //Declarations
 const startBtnEl = document.querySelector('button[data-start]');
+const inputEl = document.querySelector('#datetime-picker');
 const dateNow = Date.now();
 const daysEl = document.querySelector('span[data-days]');
 const hoursEl = document.querySelector('span[data-hours]');
@@ -21,6 +22,7 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
+  dateFormat: 'd-h-m-s',
   onClose(selectedDates) {
     if (selectedDates[0].getTime() < dateNow) {
       window.alert('Please choose a date in the future');
@@ -32,7 +34,7 @@ const options = {
   },
 };
 
-const calendar = flatpickr('#datetime-picker', options);
+const calendar = flatpickr(inputEl, options);
 
 //Timer
 startBtnEl.addEventListener('click', handleTimerStart);
@@ -41,10 +43,25 @@ function handleTimerStart(e) {
   e.preventDefault();
 
   startBtnEl.disabled = true;
+  inputEl.disabled = true;
 
   const intervalID = setInterval(() => {
     const dateNow = Date.now();
     const difference = userSelectedDate - dateNow;
+
+    //Stoping
+    if (difference <= 0) {
+      clearInterval(intervalID);
+      startBtnEl.disabled = false;
+      inputEl.disabled = false;
+
+      daysEl.innerHTML = '00';
+      hoursEl.innerHTML = '00';
+      minutesEl.innerHTML = '00';
+      secondsEl.innerHTML = '00';
+      return;
+    }
+
     const timeLeft = convertMs(difference);
 
     const days = addLeadingZero(timeLeft.days);
