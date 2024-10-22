@@ -4,24 +4,43 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 //Declarations
 const formEl = document.querySelector('.form');
-const notifOpt = {
-  message: 'Please choose a date in the future',
-  messageColor: 'black',
-  messageSize: '14px',
-  position: 'topRight',
-  timeout: 4000,
-  color: 'yellow',
-  closeOnClick: true,
-};
 
 //Form submit
 formEl.addEventListener('submit', e => {
   e.preventDefault();
   const delay = e.target.elements.delay.value;
-  const fulffiled = e.querySelector('input[name="fulfilled"]').value;
-  console.log(fulffiled);
+
+  const formData = new FormData(formEl);
+  const state = formData.get('state');
+  console.log(state);
 
   return new Promise((res, rej) => {
-    const timeoutID = setTimeout(() => {}, delay);
+    return setTimeout(() => {
+      if (state === 'fulfilled') {
+        res(
+          iziToast.show({
+            message: `✅ Fulfilled promise in ${delay}ms`,
+            messageColor: 'black',
+            messageSize: '14px',
+            position: 'topRight',
+            timeout: 4000,
+            color: 'green',
+            closeOnClick: true,
+          })
+        );
+      } else {
+        rej(
+          iziToast.show({
+            message: `❌ Rejected promise in ${delay}ms`,
+            messageColor: 'black',
+            messageSize: '14px',
+            position: 'topRight',
+            timeout: 4000,
+            color: 'red',
+            closeOnClick: true,
+          })
+        );
+      }
+    }, delay);
   });
 });
