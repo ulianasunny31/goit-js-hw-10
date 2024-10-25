@@ -12,7 +12,15 @@ const hoursEl = document.querySelector('span[data-hours]');
 const minutesEl = document.querySelector('span[data-minutes]');
 const secondsEl = document.querySelector('span[data-seconds]');
 let userSelectedDate = '';
-
+const notifOpt = {
+  message: 'Please choose a date in the future',
+  messageColor: 'black',
+  messageSize: '14px',
+  position: 'topCenter',
+  timeout: 4000,
+  color: 'yellow',
+  closeOnClick: true,
+};
 //Calendar
 startBtnEl.disabled = true;
 
