@@ -12,35 +12,40 @@ formEl.addEventListener('submit', e => {
 
   const formData = new FormData(formEl);
   const state = formData.get('state');
-  console.log(state);
 
-  return new Promise((res, rej) => {
+  //Promise creation
+  const promise = new Promise((res, rej) => {
     return setTimeout(() => {
       if (state === 'fulfilled') {
-        res(
-          iziToast.show({
-            message: `✅ Fulfilled promise in ${delay}ms`,
-            messageColor: 'black',
-            messageSize: '14px',
-            position: 'topRight',
-            timeout: 4000,
-            color: 'green',
-            closeOnClick: true,
-          })
-        );
+        res(`✅ Fulfilled promise in ${delay}ms`);
       } else {
-        rej(
-          iziToast.show({
-            message: `❌ Rejected promise in ${delay}ms`,
-            messageColor: 'black',
-            messageSize: '14px',
-            position: 'topRight',
-            timeout: 4000,
-            color: 'red',
-            closeOnClick: true,
-          })
-        );
+        rej(`❌ Rejected promise in ${delay}ms`);
       }
     }, delay);
   });
+
+  //Promise handling
+  promise
+    .then(value => {
+      iziToast.show({
+        message: value,
+        messageColor: 'black',
+        messageSize: '14px',
+        position: 'topRight',
+        timeout: 4000,
+        color: 'green',
+        closeOnClick: true,
+      });
+    })
+    .catch(value => {
+      iziToast.show({
+        message: value,
+        messageColor: 'black',
+        messageSize: '14px',
+        position: 'topRight',
+        timeout: 4000,
+        color: 'red',
+        closeOnClick: true,
+      });
+    });
 });

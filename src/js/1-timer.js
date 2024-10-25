@@ -27,7 +27,6 @@ const options = {
       iziToast.show(notifOpt);
     } else {
       userSelectedDate = selectedDates[0];
-      console.log(userSelectedDate);
       startBtnEl.disabled = false;
     }
   },

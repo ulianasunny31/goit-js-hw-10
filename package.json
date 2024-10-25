@@ -14,7 +14,7 @@
     "postcss-sort-media-queries": "^5.2.0",
     "vite": "^5.4.6"
   },
-  "author": "Alexander Repeta <alexander.repeta@gmail.com>",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "flatpickr": "^4.6.13",
